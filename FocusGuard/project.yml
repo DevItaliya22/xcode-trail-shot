@@ -1,0 +1,141 @@
+name: FocusGuard
+options:
+  bundleIdPrefix: com.focusguard
+  deploymentTarget:
+    iOS: "26.0"
+  xcodeVersion: "26.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+    TARGETED_DEVICE_FAMILY: "1"
+    IPHONEOS_DEPLOYMENT_TARGET: "26.0"
+
+targets:
+  FocusGuard:
+    type: application
+    platform: iOS
+    sources:
+      - path: FocusGuard
+      - path: Shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.focusguard.app
+        INFOPLIST_FILE: FocusGuard/Info.plist
+        CODE_SIGN_ENTITLEMENTS: FocusGuard/FocusGuard.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        GENERATE_INFOPLIST_FILE: NO
+        SWIFT_EMIT_LOC_STRINGS: YES
+    dependencies:
+      - target: FocusGuardShieldConfig
+      - target: FocusGuardShieldAction
+      - target: FocusGuardDeviceActivity
+      - target: FocusGuardWidget
+      - sdk: Charts.framework
+      - sdk: FamilyControls.framework
+      - sdk: ManagedSettings.framework
+      - sdk: DeviceActivity.framework
+      - sdk: ActivityKit.framework
+      - sdk: AppIntents.framework
+    entitlements:
+      path: FocusGuard/FocusGuard.entitlements
+
+  FocusGuardShieldConfig:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: FocusGuardShieldConfig
+      - path: Shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.focusguard.app.shieldconfig
+        INFOPLIST_FILE: FocusGuardShieldConfig/Info.plist
+        CODE_SIGN_ENTITLEMENTS: FocusGuardShieldConfig/FocusGuardShieldConfig.entitlements
+        GENERATE_INFOPLIST_FILE: NO
+        SKIP_INSTALL: YES
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"
+    dependencies:
+      - sdk: ManagedSettings.framework
+      - sdk: ManagedSettingsUI.framework
+      - sdk: FamilyControls.framework
+
+  FocusGuardShieldAction:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: FocusGuardShieldAction
+      - path: Shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.focusguard.app.shieldaction
+        INFOPLIST_FILE: FocusGuardShieldAction/Info.plist
+        CODE_SIGN_ENTITLEMENTS: FocusGuardShieldAction/FocusGuardShieldAction.entitlements
+        GENERATE_INFOPLIST_FILE: NO
+        SKIP_INSTALL: YES
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"
+    dependencies:
+      - sdk: ManagedSettings.framework
+      - sdk: DeviceActivity.framework
+      - sdk: FamilyControls.framework
+
+  FocusGuardDeviceActivity:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: FocusGuardDeviceActivity
+      - path: Shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.focusguard.app.deviceactivity
+        INFOPLIST_FILE: FocusGuardDeviceActivity/Info.plist
+        CODE_SIGN_ENTITLEMENTS: FocusGuardDeviceActivity/FocusGuardDeviceActivity.entitlements
+        GENERATE_INFOPLIST_FILE: NO
+        SKIP_INSTALL: YES
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"
+    dependencies:
+      - sdk: DeviceActivity.framework
+      - sdk: ManagedSettings.framework
+      - sdk: FamilyControls.framework
+
+  FocusGuardWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: FocusGuardWidget
+      - path: Shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.focusguard.app.widget
+        INFOPLIST_FILE: FocusGuardWidget/Info.plist
+        CODE_SIGN_ENTITLEMENTS: FocusGuardWidget/FocusGuardWidget.entitlements
+        GENERATE_INFOPLIST_FILE: NO
+        SKIP_INSTALL: YES
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"
+    dependencies:
+      - sdk: ActivityKit.framework
+      - sdk: WidgetKit.framework
+
+schemes:
+  FocusGuard:
+    build:
+      targets:
+        FocusGuard: all
+        FocusGuardShieldConfig: all
+        FocusGuardShieldAction: all
+        FocusGuardDeviceActivity: all
+        FocusGuardWidget: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release

@@ -1,0 +1,12 @@
+disabled_rules:
+  - trailing_whitespace
+
+opt_in_rules:
+  - unused_import
+  - redundant_nil_coalescing
+  - empty_count
+  - force_unwrapping
+
+line_length:
+  warning: 140
+  error: 180
